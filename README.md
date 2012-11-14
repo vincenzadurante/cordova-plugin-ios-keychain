@@ -17,6 +17,22 @@ The plugin's JavaScript functions are called after getting the plugin object thu
         var kc = cordova.require("cordova/plugin/keychain");
         kc.getForKey(win, fail, "some_key", "some_servicename");
         
+**Important:**
+
+        If you are saving a JSON string value in setForKey, for example after applying JSON.stringify on an object, you must escape the characters in that string, if not you cannot retrieve it using getForKey.        
+        
+        var obj = { foo: 'bar' };
+        var value = JSON.stringify(obj);
+        value = value 
+              .replace(/[\\]/g, '\\\\')
+              .replace(/[\"]/g, '\\\"')
+              .replace(/[\/]/g, '\\/')
+              .replace(/[\b]/g, '\\b')
+              .replace(/[\f]/g, '\\f')
+              .replace(/[\n]/g, '\\n')
+              .replace(/[\r]/g, '\\r')
+              .replace(/[\t]/g, '\\t');
+              
 See the **example** folder for example usage.
 
         // Get a reference to the plugin first
