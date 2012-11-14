@@ -5,9 +5,9 @@
 
     <name>iOS KeyChain</name>
 	
-	<engines>
-	    <engine name="cordova" version="2.2.0" />
-	</engines>
+    <engines>
+        <engine name="cordova" version="2.2.0" />
+    </engines>
 	
     <asset src="www/keychain.js" target="keychain.js" />
 
