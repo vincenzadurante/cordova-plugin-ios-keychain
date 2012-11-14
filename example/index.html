@@ -6,14 +6,14 @@
 
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 
-    <title>paypal-plugin-host</title>
+    <title></title>
 	
 	<!-- iPad/iPhone specific css below, add after your main css >
 	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
 	<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
 	-->
-	<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
-	<script type="text/javascript" charset="utf-8" src="SAiOSKeychainPlugin.js"></script>
+	<script type="text/javascript" charset="utf-8" src="cordova-2.2.0.js"></script>
+	<script type="text/javascript" charset="utf-8" src="keychain.js"></script>
     <script type="text/javascript" charset="utf-8">
 
 
@@ -45,48 +45,54 @@
 	
 	function onGet()
 	{
+       var kc = cordova.require("cordova/plugin/keychain");
+        
 	   var key = document.getElementById("keytoget").value;
 	   var servicename = document.getElementById("servicename").value
 	   
-	   var win = function(key, value) {
+	   var win = function(value) {
 			alert("GET SUCCESS - Key: " + key + " Value: " + value);
 	   };
-	   var fail = function(key, error) {
+	   var fail = function(error) {
 			alert("GET FAIL - Key: " + key + " Error: " + error);
 	   };
 	   
-	   window.plugins.keychain.getForKey(key, servicename, win, fail);
+	   kc.getForKey(win, fail, key, servicename);
 	}
 
 	function onSet()
 	{
+       var kc = cordova.require("cordova/plugin/keychain");
+
 	   var key = document.getElementById("keytoset").value;
 	   var value = document.getElementById("valuetoset").value;
 	   var servicename = document.getElementById("servicename").value;
 	   
-	   var win = function(key) {
+	   var win = function() {
 			alert("SET SUCCESS - Key: " + key);
 	   };
-	   var fail = function(key, error) {
+	   var fail = function(error) {
 			alert("SET FAIL - Key: " + key + " Error: " + error);
 	   };
 	   
-	   window.plugins.keychain.setForKey(key, value, servicename, win, fail);
+	   kc.setForKey(win, fail, key, servicename, value);
 	}
 
 	function onRemove()
 	{
+       var kc = cordova.require("cordova/plugin/keychain");
+        
 	   var key = document.getElementById("keytoremove").value;
 	   var servicename = document.getElementById("servicename").value
 	   
-	   var win = function(key) {
+	   var win = function() {
 			alert("REMOVE SUCCESS - Key: " + key);
 	   };
-	   var fail = function(key, error) {
+	   var fail = function(error) {
 			alert("REMOVE FAIL - Key: " + key + " Error: " + error);
 	   };
 	   
-	   window.plugins.keychain.removeForKey(key, servicename, win, fail);
+	   kc.removeForKey(win, fail, key, servicename);
 	}
     
     </script>

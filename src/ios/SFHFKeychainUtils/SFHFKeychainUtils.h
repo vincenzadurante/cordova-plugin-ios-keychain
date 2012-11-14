@@ -1,28 +1,4 @@
 //
-//  SAiOSPaypalPlugin.h
-//  Keychain Plugin for Cordova
-//
-//  Created by shazron on 10-11-05.
-//  Copyright 2012 Shazron Abdullah. All rights reserved.
-
-#import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-#ifdef CORDOVA_FRAMEWORK
-#import <Cordova/CDVPlugin.h>
-#else
-#import "CDVPlugin.h"
-#endif
-
-@interface SAiOSKeychainPlugin : CDVPlugin {
-}
-
-- (void) getForKey:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) setForKey:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-- (void) removeForKey:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
-
-@end
-
-//
 //  SFHFKeychainUtils.h
 //
 //  Created by Buzz Andersen on 10/20/08.
@@ -51,8 +27,11 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
-@interface SFHFKeychainUtils : NSObject {
+#import <UIKit/UIKit.h>
 
+
+@interface SFHFKeychainUtils : NSObject {
+  
 }
 
 + (NSString *) getPasswordForUsername: (NSString *) username andServiceName: (NSString *) serviceName error: (NSError **) error;

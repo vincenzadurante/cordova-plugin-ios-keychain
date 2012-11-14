@@ -1,92 +1,4 @@
 //
-//  SAiOSPaypalPlugin.m
-//  Cordova Plugin for Cordova
-//
-//  Created by shazron on 10-11-05.
-//  Copyright 2010 Shazron Abdullah. All rights reserved.
-
-#import "SAiOSKeychainPlugin.h"
-
-@implementation SAiOSKeychainPlugin
-
--(CDVPlugin*) initWithWebView:(UIWebView*)theWebView
-{
-    self = (SAiOSKeychainPlugin*)[super initWithWebView:(UIWebView*)theWebView];
-    if (self) {
-		// initialization here
-    }
-    return self;
-}
-
-- (void) getForKey:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
-{
-	int argc = [arguments count];
-	if (argc < 2) {
-		return;
-	}
-	
-	NSString* key = [arguments objectAtIndex:0];
-	NSString* serviceName = [arguments objectAtIndex:1];
-	NSError* error = nil;
-	
-	NSString* value = [SFHFKeychainUtils getPasswordForUsername:key andServiceName:serviceName error:&error];
-	if (error == nil && value != nil) {
-		NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.keychain._onGetCallbackSuccess(\"%@\", \"%@\");", key, value];
-		[super writeJavascript:jsCallback];
-	} else {
-		NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.keychain._onGetCallbackFail(\"%@\", \"%@\");", key, [error localizedDescription]];
-		[super writeJavascript:jsCallback];
-	}
-}
-
-- (void) setForKey:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
-{
-	int argc = [arguments count];
-	if (argc < 3) {
-		return;
-	}
-	
-	NSString* key = [arguments objectAtIndex:0];
-	NSString* value = [arguments objectAtIndex:1];
-	NSString* serviceName = [arguments objectAtIndex:2];
-	NSError* error = nil;
-	
-	BOOL stored = [SFHFKeychainUtils storeUsername:key andPassword:value forServiceName:serviceName updateExisting:YES error:&error];
-	if (stored) {
-		NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.keychain._onSetCallbackSuccess(\"%@\");", key];
-		[super writeJavascript:jsCallback];
-	} else {
-		NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.keychain._onSetCallbackFail(\"%@\", \"%@\");", key, [error localizedDescription]];
-		[super writeJavascript:jsCallback];
-	}
-}
-
-- (void) removeForKey:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
-{	
-	int argc = [arguments count];
-	if (argc < 2) {
-		return;
-	}
-	
-	NSString* key = [arguments objectAtIndex:0];
-	NSString* serviceName = [arguments objectAtIndex:1];
-	NSError* error = nil;
-	
-	BOOL deleted = [SFHFKeychainUtils deleteItemForUsername:key andServiceName:serviceName error:&error];
-	if (deleted) {
-		NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.keychain._onRemoveCallbackSuccess(\"%@\");", key];
-		[super writeJavascript:jsCallback];
-	} else {
-		NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.keychain._onRemoveCallbackFail(\"%@\", \"%@\");", key, [error localizedDescription]];
-		[super writeJavascript:jsCallback];
-	}
-}
-
-
-@end
-
-
-//
 //  SFHFKeychainUtils.m
 //
 //  Created by Buzz Andersen on 10/20/08.
@@ -115,6 +27,7 @@
 //  OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#import "SFHFKeychainUtils.h"
 #import <Security/Security.h>
 
 static NSString *SFHFKeychainUtilsErrorDomain = @"SFHFKeychainUtilsErrorDomain";
@@ -472,10 +385,12 @@ static NSString *SFHFKeychainUtilsErrorDomain = @"SFHFKeychainUtilsErrorDomain";
 		status = SecItemAdd((CFDictionaryRef) query, NULL);
 	}
 	
-	if (error != nil && status != noErr) 
+	if (status != noErr) 
   {
 		// Something went wrong with adding the new item. Return the Keychain error code.
-		*error = [NSError errorWithDomain: SFHFKeychainUtilsErrorDomain code: status userInfo: nil];
+		if (error != nil) {
+			*error = [NSError errorWithDomain: SFHFKeychainUtilsErrorDomain code: status userInfo: nil];
+		}
     
     return NO;
 	}
@@ -506,9 +421,11 @@ static NSString *SFHFKeychainUtilsErrorDomain = @"SFHFKeychainUtilsErrorDomain";
 	
 	OSStatus status = SecItemDelete((CFDictionaryRef) query);
 	
-	if (error != nil && status != noErr) 
+	if (status != noErr) 
   {
-		*error = [NSError errorWithDomain: SFHFKeychainUtilsErrorDomain code: status userInfo: nil];		
+	  if (error != nil) {
+		  *error = [NSError errorWithDomain: SFHFKeychainUtilsErrorDomain code: status userInfo: nil];
+	  }
     
     return NO;
 	}
