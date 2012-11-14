@@ -41,8 +41,8 @@ See the **example** folder for example usage.
         /*
          Retrieves a value for a key and servicename.
          
-         @param successCallback returns the value as the argument to the callback
-         @param failureCallback returns the error string as the argument to the callback
+         @param successCallback returns the value as the argument to the callback when successful
+         @param failureCallback returns the error string as the argument to the callback, for a failure
          @param key the key to retrieve
          @param servicename the servicename to use
          */
@@ -51,8 +51,8 @@ See the **example** folder for example usage.
         /*
          Sets a value for a key and servicename.
          
-         @param successCallback returns the value as the argument to the callback
-         @param failureCallback returns the error string as the argument to the callback
+         @param successCallback returns when successful
+         @param failureCallback returns the error string as the argument to the callback, for a failure
          @param key the key to set
          @param servicename the servicename to use
          @param value the value to set
@@ -62,7 +62,7 @@ See the **example** folder for example usage.
         /*
          Removes a value for a key and servicename.
          
-         @param successCallback returns the value as the argument to the callback
+         @param successCallback returns when successful
          @param failureCallback returns the error string as the argument to the callback
          @param key the key to remove
          @param servicename the servicename to use
