@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-    id="com.phonegap.plugins.keychain"
+    id="com.shazron.cordova.keychain"
     version="1.0.0">
 
     <name>iOS KeyChain</name>
 	
     <engines>
-        <engine name="cordova" version="2.2.0" />
+        <engine name="cordova" version=">=2.2.0" />
     </engines>
 	
     <asset src="www/keychain.js" target="keychain.js" />
 
     <!-- ios -->
     <platform name="ios">
-        <!-- Cordova 2.2.0 -->
-        <plugins-plist key="Keychain"
-                    string="CDVKeychain" />
+        <!-- Only for Cordova 2.2.0 -->
+        <plugins-plist key="Keychain" string="CDVKeychain" />
                
-        <!-- use this tag for Cordova 2.3.0, 2.4.0 -->
+        <!-- Only for Cordova 2.3.0, 2.4.0 -->
         <!--
         <config-file target="config.xml" parent="/cordova/plugins">
+            <plugin name="Keychain" value="CDVKeychain"/>
+        </config-file>
         -->
-        <!-- Cordova 2.5.0 -->
+
+        <!-- Only for Cordova >= 2.5.0 -->
         <config-file target="config.xml" parent="/widget/plugins">
-                <plugin name="Keychain"
-                    value="CDVKeychain"/>
+            <plugin name="Keychain" value="CDVKeychain"/>
         </config-file>
 
         <!-- Note: the ios src is based off src/ios implicitly --> 
-        <header-file src="CDVKeychain.h" />
-        <header-file src="SFHFKeychainUtils/SFHFKeychainUtils.h"/>
+        <header-file src="CDVKeychain.h" target-dir="Keychain"/>
+        <header-file src="SFHFKeychainUtils/SFHFKeychainUtils.h" target-dir="Keychain/SFHFKeychainUtils"/>
         
-        <source-file src="CDVKeychain.m" />
-        <source-file src="SFHFKeychainUtils/SFHFKeychainUtils.m" />
+        <source-file src="CDVKeychain.m" target-dir="Keychain" />
+        <source-file src="SFHFKeychainUtils/SFHFKeychainUtils.m" target-dir="Keychain/SFHFKeychainUtils" />
         
         <framework src="Security.framework" />
     </platform>
