@@ -9,7 +9,19 @@ Follows the [Cordova Plugin spec](https://github.com/apache/cordova-plugman/blob
 1. Add the SFHFKeychainUtils files **(SFHFKeychainUtils.m, and SFHFKeychainUtils.h)** in Xcode (add as a group)
 2. Add the plugin files **(CDVKeychain.h, CDVKeychain.m)** in Xcode (add as a group)
 3. Add **keychain.js** to your **www** folder, and reference it in a script tag, after your cordova.js
-4. In __Cordova.plist__, under the **'Plugins'** key, add a new row: key is **"Keychain"** and the value is **"CDVKeychain"**
+4. 
+	a. For __Cordova.plist__, under the **'Plugins'** key, add a new row: key is **"Keychain"** and the value is **"CDVKeychain"**
+	
+	b. For __config.xml__, under the **&lt;plugins&gt;** tag, add this (deprecated, 2.7.0 and below):
+	     
+	     <plugin name="Keychain" value="CDVKeychain" />
+	
+	b. For __config.xml__, add a new **&lt;feature&gt;** tag (2.8.0 and up):
+
+         <feature name="Keychain">
+            <param name="ios-package" value="CDVKeychain" />
+         </feature>
+	
 5. Add the framework **"Security.framework"**
     
 The plugin's JavaScript functions are called after getting the plugin object thus:
