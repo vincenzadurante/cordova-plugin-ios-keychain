@@ -4,7 +4,7 @@ created by Shazron Abdullah
 
 [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) except for the SFHFKeychainUtils code that is under **src/ios/SFHFKeychainUtils**
 
-Follows the [Cordova Plugin spec](https://github.com/alunny/cordova-plugin-spec), so that it works with [Plugman](https://github.com/imhotep/plugman), or you can install it manually below.
+Follows the [Cordova Plugin spec](https://github.com/apache/cordova-plugman/blob/master/plugin_spec.md), so that it works with [Plugman](https://github.com/apache/cordova-plugman), or you can install it manually below.
  
 1. Add the SFHFKeychainUtils files **(SFHFKeychainUtils.m, and SFHFKeychainUtils.h)** in Xcode (add as a group)
 2. Add the plugin files **(CDVKeychain.h, CDVKeychain.m)** in Xcode (add as a group)
