@@ -16,7 +16,7 @@ Follows the [Cordova Plugin spec](https://github.com/apache/cordova-plugman/blob
 	     
 	     <plugin name="Keychain" value="CDVKeychain" />
 	
-	b. For __config.xml__, add a new **&lt;feature&gt;** tag (2.8.0 and up):
+	c. For __config.xml__, add a new **&lt;feature&gt;** tag (2.8.0 and up):
 
          <feature name="Keychain">
             <param name="ios-package" value="CDVKeychain" />
