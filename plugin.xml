@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    id="com.shazron.cordova.keychainutil"
+    id="com.shazron.cordova.plugin.keychainutil"
     version="1.0.0">
 
     <name>iOS KeyChain</name>
@@ -11,35 +11,26 @@
 	
     <asset src="www/keychain.js" target="plugins/keychain.js" />
 
+	<js-module src="www/keychain.js" name="Keychain">
+    	<clobbers target="window.Keychain" />
+	</js-module>
+	
     <!-- ios -->
     <platform name="ios">
-        <!-- Only for Cordova 2.2.0 -->
-        <plugins-plist key="Keychain" string="CDVKeychain" />
-               
         <!-- feature tag in config.xml -->
         <config-file target="config.xml" parent="/widget">
           <feature name="Keychain">
             <param name="ios-package" value="CDVKeychain"/>
           </feature>
         </config-file>
-
-        <!-- deprecated plugins tag in config.xml -->
-        <config-file target="config.xml" parent="/*/plugins">
-            <plugin name="Keychain" value="CDVKeychain"/>
-        </config-file>
         
         <header-file src="src/ios/CDVKeychain.h" />
         <header-file src="src/ios/SFHFKeychainUtils/SFHFKeychainUtils.h"/>
         
         <source-file src="src/ios/CDVKeychain.m"/>
-        <source-file src="src/ios/SFHFKeychainUtils/SFHFKeychainUtils.m" />
+        <source-file src="src/ios/SFHFKeychainUtils/SFHFKeychainUtils.m" compiler-flags="-fno-objc-arc" />
         
         <framework src="Security.framework" />
         
-        <info>
-Add this script tag to your index.html:
-    &lt;script src="plugins/keychain.js"&gt;&lt;/script&gt;
-	    </info>
-
     </platform>
 </plugin>

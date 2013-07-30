@@ -16,30 +16,28 @@
  specific language governing permissions and limitations
  under the License.
  */
- 
- cordova.define("cordova/plugin/keychain", function(require, exports, module) {
- 	var exec = require('cordova/exec');
 
-	var Keychain = function() {
-	    this.serviceName = "Keychain";
-	};
+// This is installed as a <js-module /> so it doesn't have a cordova.define wrapper
 
-    Keychain.prototype.getForKey = function(successCallback, failureCallback, key, servicename)
-    {
-        exec(successCallback, failureCallback, this.serviceName, "getForKey", [key, servicename]);
-    }
-    
-    Keychain.prototype.setForKey = function(successCallback, failureCallback, key, servicename, value)
-    {
-        exec(successCallback, failureCallback, this.serviceName, "setForKey", [key, servicename, value]);
-    }
-    
-    Keychain.prototype.removeForKey = function(successCallback, failureCallback, key, servicename)
-    {
-        exec(successCallback, failureCallback, this.serviceName, "removeForKey", [key, servicename]);
-    }
+var exec = require('cordova/exec');
 
- 	var keychain = new Keychain();
- 	module.exports = keychain;
+var Keychain = function() {
+	this.serviceName = "Keychain";
+};
 
- });
+Keychain.prototype.getForKey = function(successCallback, failureCallback, key, servicename)
+{
+	exec(successCallback, failureCallback, this.serviceName, "getForKey", [key, servicename]);
+}
+
+Keychain.prototype.setForKey = function(successCallback, failureCallback, key, servicename, value)
+{
+	exec(successCallback, failureCallback, this.serviceName, "setForKey", [key, servicename, value]);
+}
+
+Keychain.prototype.removeForKey = function(successCallback, failureCallback, key, servicename)
+{
+	exec(successCallback, failureCallback, this.serviceName, "removeForKey", [key, servicename]);
+}
+
+module.exports = Keychain;
