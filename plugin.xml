@@ -31,7 +31,7 @@
         <header-file src="src/ios/SFHFKeychainUtils/SFHFKeychainUtils.h"/>
         
         <source-file src="src/ios/CDVKeychain.m"/>
-        <source-file src="src/ios/SFHFKeychainUtils/SFHFKeychainUtils.m" compiler-flags="-fno-objc-arc" />
+        <source-file src="src/ios/SFHFKeychainUtils/SFHFKeychainUtils.m" compiler-flags="-fobjc-arc" />
         
         <framework src="Security.framework" />
         
