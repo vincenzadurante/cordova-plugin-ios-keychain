@@ -20,7 +20,7 @@ See the **example** folder for example usage.
 
 ```js
 /*
- Retrieves a value for a key and servicename.
+ Retrieves a value for a key
  
  @param successCallback returns the value as the argument to the callback when successful
  @param failureCallback returns the error string as the argument to the callback, for a failure
@@ -30,7 +30,7 @@ See the **example** folder for example usage.
 Keychain.get(successCallback, failureCallback, 'key', 'TouchID Message');
 
 /*
- Sets a value for a key and servicename.
+ Sets a value for a key
  
  @param successCallback returns when successful
  @param failureCallback returns the error string as the argument to the callback, for a failure
@@ -41,13 +41,35 @@ Keychain.get(successCallback, failureCallback, 'key', 'TouchID Message');
 Keychain.set(successCallback, failureCallback, 'key', 'value', useTouchID);
 
 /*
- Removes a value for a key and servicename.
+ Removes a value for a key
  
  @param successCallback returns when successful
  @param failureCallback returns the error string as the argument to the callback
  @param key the key to remove
  */
 kc.remove(successCallback, failureCallback, 'key');
+
+/*
+ Sets a JSON value for a key 
+ 
+ @param successCallback returns when successful
+ @param failureCallback returns the error string as the argument to the callback, for a failure
+ @param key the key to set
+ @param value the value to set
+ @param useTouchID whether to store the value with security such that TouchID will be needed to grab it
+ */
+Keychain.setJson(successCallback, failureCallback, 'key', 'value', useTouchID);
+
+/*
+ Gets a JSON value for a key 
+ 
+ @param successCallback returns when successful
+ @param failureCallback returns the error string as the argument to the callback, for a failure
+ @param key the key to set
+ @param value the value to set
+ @param useTouchID whether to store the value with security such that TouchID will be needed to grab it
+ */
+Keychain.getJson(successCallback, failureCallback, 'key', useTouchID);
 ```
 
 ### License 
