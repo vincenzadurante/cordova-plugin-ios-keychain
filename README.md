@@ -47,7 +47,7 @@ Keychain.set(successCallback, failureCallback, 'key', 'value', useTouchID);
  @param failureCallback returns the error string as the argument to the callback
  @param key the key to remove
  */
-kc.remove(successCallback, failureCallback, 'key');
+Keychain.remove(successCallback, failureCallback, 'key');
 
 /*
  Sets a JSON value for a key 
