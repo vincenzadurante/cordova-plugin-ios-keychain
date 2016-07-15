@@ -32,7 +32,6 @@ var Keychain = {
 		exec(success, error, this.serviceName, "set", [key, value, useTouchID]);
 	},
 
-	/*
 	setJson: function(success, error, key, obj, useTouchID) {
 		var value = JSON.stringify(obj);
 		value = value
@@ -50,16 +49,7 @@ var Keychain = {
 
 	getJson: function(success, error, key, touchIDMessage) {
 		var cb = function(v) {
-			console.log('Got back json val', v);
-
-			v = v.replace(/\\\\/g, '\\')
-				.replace(/\\\"/g, '\"')
-				.replace(/\\//g, '\/')
-				.replace(/\\b/g, '\b')
-				.replace(/\\f/g, '\f')
-				.replace(/\\n/g, '\n')
-				.replace(/\\r/g, '\r')
-				.replace(/\\t/g, '\t');
+			v = v.replace(/\\\"/g, '"');
 
 			try {
 				var obj = JSON.parse(v);
@@ -70,7 +60,6 @@ var Keychain = {
 		};
 		exec(cb, error, this.serviceName, "get", [key, touchIDMessage]);
 	},
-	*/
 
 	remove: function(successCallback, failureCallback, key) {
 		exec(successCallback, failureCallback, this.serviceName, "remove", [key]);

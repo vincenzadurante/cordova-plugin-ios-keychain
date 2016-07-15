@@ -39,14 +39,11 @@
 
     NSString *message = NSLocalizedString(touchIDMessage, @"Prompt TouchID message");
 
-    NSLog(@"Getting value from TouchID %@ - %@", touchIDMessage, message);
-
     A0SimpleKeychain *keychain = [A0SimpleKeychain keychain];
 
-    NSLog(@"Setting to use access control");
     keychain.useAccessControl = YES;
     keychain.defaultAccessiblity = A0SimpleKeychainItemAccessibleWhenPasscodeSetThisDeviceOnly;
-    
+
     NSString *value = [keychain stringForKey:key promptMessage:message];
 
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:value];
@@ -73,7 +70,6 @@
     A0SimpleKeychain *keychain = [A0SimpleKeychain keychain];
 
     if(useTouchID) {
-      NSLog(@"Setting to use access control");
       keychain.useAccessControl = YES;
       keychain.defaultAccessiblity = A0SimpleKeychainItemAccessibleWhenPasscodeSetThisDeviceOnly;
     }
