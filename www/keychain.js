@@ -32,7 +32,8 @@ var Keychain = {
 		exec(success, error, this.serviceName, "set", [key, value, useTouchID]);
 	},
 
-	setJson: function(success, error, key, obj) {
+	/*
+	setJson: function(success, error, key, obj, useTouchID) {
 		var value = JSON.stringify(obj);
 		value = value
 			.replace(/[\\]/g, '\\\\')
@@ -44,11 +45,22 @@ var Keychain = {
 			.replace(/[\r]/g, '\\r')
 			.replace(/[\t]/g, '\\t');
 
-		exec(success, error, this.serviceName, "set", [key, value]);
+		exec(success, error, this.serviceName, "set", [key, value, useTouchID]);
 	},
 
-	getJson: function(success, error, key) {
+	getJson: function(success, error, key, touchIDMessage) {
 		var cb = function(v) {
+			console.log('Got back json val', v);
+
+			v = v.replace(/\\\\/g, '\\')
+				.replace(/\\\"/g, '\"')
+				.replace(/\\//g, '\/')
+				.replace(/\\b/g, '\b')
+				.replace(/\\f/g, '\f')
+				.replace(/\\n/g, '\n')
+				.replace(/\\r/g, '\r')
+				.replace(/\\t/g, '\t');
+
 			try {
 				var obj = JSON.parse(v);
 				success(obj);
@@ -56,8 +68,9 @@ var Keychain = {
 				error(e);
 			}
 		};
-		exec(cb, error, this.serviceName, "get", [key]);
+		exec(cb, error, this.serviceName, "get", [key, touchIDMessage]);
 	},
+	*/
 
 	remove: function(successCallback, failureCallback, key) {
 		exec(successCallback, failureCallback, this.serviceName, "remove", [key]);
