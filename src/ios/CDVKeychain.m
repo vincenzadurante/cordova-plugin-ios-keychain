@@ -18,7 +18,7 @@
  */
 
 #import "CDVKeychain.h"
-#import "A0KeyChain/A0SimpleKeychain.h"
+#import "A0SimpleKeychain.h"
 
 @implementation CDVKeychain
 
