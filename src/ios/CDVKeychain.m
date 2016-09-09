@@ -37,7 +37,10 @@
     NSString *key = [arguments objectAtIndex:0];
     NSString *touchIDMessage = [arguments objectAtIndex:1];
 
-    NSString *message = NSLocalizedString(touchIDMessage, @"Prompt TouchID message");
+    NSString *message = NSLocalizedString(@"Please Authenticate", nil);
+    if(![touchIDMessage isEqual:[NSNull null]]) {
+      message = NSLocalizedString(touchIDMessage, @"Prompt TouchID message");
+    }
 
     A0SimpleKeychain *keychain = [A0SimpleKeychain keychain];
 
@@ -66,6 +69,8 @@
     NSString* key = [arguments objectAtIndex:0];
     NSString* value = [arguments objectAtIndex:1];
     BOOL useTouchID = [[arguments objectAtIndex:2] boolValue];
+
+      NSLog(@"SET %@ %@ %d", key ,value, useTouchID);
 
     A0SimpleKeychain *keychain = [A0SimpleKeychain keychain];
 
