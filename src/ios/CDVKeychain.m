@@ -65,7 +65,7 @@
 
     NSString* key = [arguments objectAtIndex:0];
     NSString* value = [arguments objectAtIndex:1];
-    BOOL useTouchID = [arguments objectAtIndex:2];
+    BOOL useTouchID = [[arguments objectAtIndex:2] boolValue];
 
     A0SimpleKeychain *keychain = [A0SimpleKeychain keychain];
 
