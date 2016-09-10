@@ -28,8 +28,10 @@ var Keychain = {
 	get: function(success, error, key, touchIDMessage) {
 		exec(success, error, this.serviceName, "get", [key, touchIDMessage]);
 	},
-	set: function(success, error, key, value, useTouchID) {
-		exec(success, error, this.serviceName, "set", [key, value, useTouchID]);
+	set: function(success, error, key, value, useTouchID, icloudSync) {
+		var args = [key, value, useTouchID];
+		icloudSync && args.push(icloudSync)
+		exec(success, error, this.serviceName, "set", args);
 	},
 
 	setJson: function(success, error, key, obj, useTouchID) {

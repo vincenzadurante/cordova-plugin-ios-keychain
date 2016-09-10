@@ -43,6 +43,7 @@
         _service = service;
         _accessGroup = accessGroup;
         _defaultAccessiblity = A0SimpleKeychainItemAccessibleAfterFirstUnlock;
+        _icloudSync = NO;
         _useAccessControl = NO;
     }
     return self;
@@ -283,6 +284,11 @@
 #if !TARGET_IPHONE_SIMULATOR
     if (self.accessGroup) {
         attributes[(__bridge id)kSecAttrAccessGroup] = self.accessGroup;
+    }
+
+    if (self.icloudSync) {
+        NSLog(@"SYNCING TO ICLOUD");
+        attributes[(__bridge id)kSecAttrSynchronizable] = self.icloudSync ? (__bridge id)kSecAttrSynchronizableAny : NO;
     }
 #endif
 

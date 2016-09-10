@@ -63,7 +63,7 @@ typedef NS_ENUM(NSInteger, A0SimpleKeychainItemAccessible) {
 #define A0ErrorDomain @"com.auth0.simplekeychain"
 
 /**
- * Enum with keychain error codes. It's a mirror of the keychain error codes. 
+ * Enum with keychain error codes. It's a mirror of the keychain error codes.
  */
 typedef NS_ENUM(NSInteger, A0SimpleKeychainError) {
     /**
@@ -140,6 +140,12 @@ NS_ASSUME_NONNULL_BEGIN
  *  Default value is NO.
  */
 @property (assign, nonatomic) BOOL useAccessControl;
+
+/**
+ *  Tells A0SimpleKeychain to use 'kkSecAttrSynchronizableAny' to sync keychain items to iCloud.
+ *  Default value is NO.
+ */
+@property (assign, nonatomic) BOOL icloudSync;
 
 ///---------------------------------------------------
 /// @name Initialization
@@ -282,7 +288,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param key     the key of the value to fetch
  *  @param message prompt message to display for TouchID/passcode prompt if neccesary
- *  @param err     Returns an error, if the item cannot be retrieved. F.e. item not found 
+ *  @param err     Returns an error, if the item cannot be retrieved. F.e. item not found
  *                 or user authentication failed in TouchId case.
  *
  *  @return the value or nil if an error occurs.

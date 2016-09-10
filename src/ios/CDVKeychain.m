@@ -70,7 +70,10 @@
     NSString* value = [arguments objectAtIndex:1];
     BOOL useTouchID = [[arguments objectAtIndex:2] boolValue];
 
-      NSLog(@"SET %@ %@ %d", key ,value, useTouchID);
+    BOOL syncToICloud = NO;
+    if([arguments count] > 3) {
+      syncToICloud = [[arguments objectAtIndex:3] boolValue];
+    }
 
     A0SimpleKeychain *keychain = [A0SimpleKeychain keychain];
 
@@ -78,6 +81,8 @@
       keychain.useAccessControl = YES;
       keychain.defaultAccessiblity = A0SimpleKeychainItemAccessibleWhenPasscodeSetThisDeviceOnly;
     }
+
+    keychain.icloudSync = syncToICloud;
 
     [keychain setString:value forKey:key];
 
