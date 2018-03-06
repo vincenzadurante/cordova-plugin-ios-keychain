@@ -75,9 +75,15 @@
         return nil;
     }
 
-    NSDictionary *query = [self queryFetchOneByKey:key message:message];
+    NSMutableDictionary *query = [self queryFetchOneByKey:key message:message];
     CFTypeRef data = nil;
     OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, &data);
+    
+    if (err == nil) {
+        [query addEntriesFromDictionary:@{(__bridge id)kSecAttrSynchronizable: (__bridge id)kSecAttrSynchronizableAny,}];
+        status = SecItemCopyMatching((__bridge CFDictionaryRef)query, &data);
+    }
+    
     if (status != errSecSuccess) {
         if(err != nil) {
             *err = [NSError errorWithDomain:A0ErrorDomain code:status userInfo:@{NSLocalizedDescriptionKey : [self stringForSecStatus:status]}];
@@ -285,10 +291,10 @@
     if (self.accessGroup) {
         attributes[(__bridge id)kSecAttrAccessGroup] = self.accessGroup;
     }
-
+    
     if (self.icloudSync) {
         NSLog(@"SYNCING TO ICLOUD");
-        attributes[(__bridge id)kSecAttrSynchronizable] = self.icloudSync ? (__bridge id)kSecAttrSynchronizableAny : NO;
+        attributes[(__bridge id)kSecAttrSynchronizable] = (__bridge id)kCFBooleanTrue;
     }
 #endif
 
@@ -354,7 +360,7 @@
     return query;
 }
 
-- (NSDictionary *)queryFetchOneByKey:(NSString *)key message:(NSString *)message {
+- (NSMutableDictionary *)queryFetchOneByKey:(NSString *)key message:(NSString *)message {
     NSMutableDictionary *query = [self baseQuery];
     [query addEntriesFromDictionary:@{
                                       (__bridge id)kSecReturnData: @YES,
