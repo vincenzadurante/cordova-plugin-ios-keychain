@@ -280,11 +280,11 @@
                                          (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
                                          (__bridge id)kSecAttrService: self.service,
                                          } mutableCopy];
-#if !TARGET_IPHONE_SIMULATOR
+// #if !TARGET_IPHONE_SIMULATOR
     if (self.accessGroup) {
         attributes[(__bridge id)kSecAttrAccessGroup] = self.accessGroup;
     }
-#endif
+// #endif
 
     return attributes;
 }

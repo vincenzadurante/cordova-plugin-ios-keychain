@@ -2,12 +2,15 @@ Keychain Plugin for Apache Cordova
 =====================================
 created by Shazron Abdullah
 
-Updated by Max Lynch <max@ionic.io>
+Updated by Max Lynch max@ionic.io
+
+Updated by [YJ Ang](https://github.com/yj-ang)
+ - Add on: Keychain Sharing capabilities
 
 ### Installation
 
 ```shell
-cordova plugin add https://github.com/ionic-team/cordova-plugin-ios-keychain
+cordova plugin add https://github.com/yj-ang/cordova-plugin-ios-keychain
 ```
 
 ### iCloud keychain enabled
@@ -26,8 +29,9 @@ See the **example** folder for example usage.
  @param failureCallback returns the error string as the argument to the callback, for a failure
  @param key the key to retrieve
  @param TouchIDMessage the message to show underneath the TouchID prompt (if any)
+ @param keychainGroup The name of keychain group (Optional)
  */
-Keychain.get(successCallback, failureCallback, 'key', 'TouchID Message');
+Keychain.get(successCallback, failureCallback, 'key', 'TouchID Message', 'com.group.sharedKeysApp1andApp2');
 
 /*
  Sets a value for a key
@@ -37,8 +41,9 @@ Keychain.get(successCallback, failureCallback, 'key', 'TouchID Message');
  @param key the key to set
  @param value the value to set
  @param useTouchID whether to store the value with security such that TouchID will be needed to grab it
+ @param keychainGroup The name of keychain group (Optional)
  */
-Keychain.set(successCallback, failureCallback, 'key', 'value', useTouchID);
+Keychain.set(successCallback, failureCallback, 'key', 'value', useTouchID, 'com.group.sharedKeysApp1andApp2');
 
 /*
  Removes a value for a key
@@ -46,8 +51,9 @@ Keychain.set(successCallback, failureCallback, 'key', 'value', useTouchID);
  @param successCallback returns when successful
  @param failureCallback returns the error string as the argument to the callback
  @param key the key to remove
+ @param keychainGroup The name of keychain group (Optional)
  */
-Keychain.remove(successCallback, failureCallback, 'key');
+Keychain.remove(successCallback, failureCallback, 'key', 'com.group.sharedKeysApp1andApp2');
 
 /*
  Sets a JSON value for a key 
@@ -57,8 +63,9 @@ Keychain.remove(successCallback, failureCallback, 'key');
  @param key the key to set
  @param value the value to set
  @param useTouchID whether to store the value with security such that TouchID will be needed to grab it
+ @param keychainGroup The name of keychain group (Optional)
  */
-Keychain.setJson(successCallback, failureCallback, 'key', 'value', useTouchID);
+Keychain.setJson(successCallback, failureCallback, 'key', 'value', useTouchID, 'com.group.sharedKeysApp1andApp2');
 
 /*
  Gets a JSON value for a key 
@@ -68,8 +75,9 @@ Keychain.setJson(successCallback, failureCallback, 'key', 'value', useTouchID);
  @param key the key to set
  @param value the value to set
  @param useTouchID whether to store the value with security such that TouchID will be needed to grab it
+ @param keychainGroup The name of keychain group (Optional)
  */
-Keychain.getJson(successCallback, failureCallback, 'key', useTouchID);
+Keychain.getJson(successCallback, failureCallback, 'key', useTouchID 'com.group.sharedKeysApp1andApp2');
 ```
 
 ### License 

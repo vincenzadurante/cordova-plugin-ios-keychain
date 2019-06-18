@@ -25,14 +25,19 @@ var exec = require('cordova/exec');
 var Keychain = {
 	serviceName: "Keychain",
 
-	get: function(success, error, key, touchIDMessage) {
-		exec(success, error, this.serviceName, "get", [key, touchIDMessage]);
-	},
-	set: function(success, error, key, value, useTouchID) {
-		exec(success, error, this.serviceName, "set", [key, value, !!useTouchID]);
+	get: function(success, error, key, touchIDMessage, keychainGroup) {
+		touchIDMessage = !touchIDMessage ? null : touchIDMessage;
+		keychainGroup = !keychainGroup ? null : keychainGroup;
+		exec(success, error, this.serviceName, "get", [key, touchIDMessage, keychainGroup]);
 	},
 
-	setJson: function(success, error, key, obj, useTouchID) {
+	set: function(success, error, key, value, useTouchID, keychainGroup) {
+		keychainGroup = !keychainGroup ? null : keychainGroup;
+		exec(success, error, this.serviceName, "set", [key, value, !!useTouchID, keychainGroup]);
+	},
+
+	setJson: function(success, error, key, obj, useTouchID, keychainGroup) {
+		keychainGroup = !keychainGroup ? null : keychainGroup;
 		var value = JSON.stringify(obj);
 		value = value
 			.replace(/[\\]/g, '\\\\')
@@ -44,10 +49,11 @@ var Keychain = {
 			.replace(/[\r]/g, '\\r')
 			.replace(/[\t]/g, '\\t');
 
-		exec(success, error, this.serviceName, "set", [key, value, !!useTouchID]);
+		exec(success, error, this.serviceName, "set", [key, value, !!useTouchID, keychainGroup]);
 	},
 
-	getJson: function(success, error, key, touchIDMessage) {
+	getJson: function(success, error, key, touchIDMessage, keychainGroup) {
+		keychainGroup = !keychainGroup ? null : keychainGroup;
 		var cb = function(v) {
 			if(!v) {
 				success(null);
@@ -62,11 +68,12 @@ var Keychain = {
 				error(e);
 			}
 		};
-		exec(cb, error, this.serviceName, "get", [key, touchIDMessage]);
+		exec(cb, error, this.serviceName, "get", [key, touchIDMessage, keychainGroup]);
 	},
 
-	remove: function(successCallback, failureCallback, key) {
-		exec(successCallback, failureCallback, this.serviceName, "remove", [key]);
+	remove: function(successCallback, failureCallback, key, keychainGroup) {
+		keychainGroup = !keychainGroup ? null : keychainGroup;
+		exec(successCallback, failureCallback, this.serviceName, "remove", [key, keychainGroup]);
 	}
 };
 
