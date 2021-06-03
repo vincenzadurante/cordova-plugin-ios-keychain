@@ -35,27 +35,22 @@
     }
 
     NSString *key = [arguments objectAtIndex:0];
-    NSString *touchIDMessage = [arguments objectAtIndex:1];
-    NSString *keychainGroup = [arguments objectAtIndex:2];
-
-    NSString *message = NSLocalizedString(@"Please Authenticate", nil);
-    if(![touchIDMessage isEqual:[NSNull null]]) {
-      message = NSLocalizedString(touchIDMessage, @"Prompt TouchID message");
-    }
+    NSString *keychainGroup = [arguments objectAtIndex:1];
+    NSString *accessGroup = [arguments objectAtIndex:2];
 
     A0SimpleKeychain *keychain = nil;
     
     if (keychainGroup == [NSNull null]) {
       keychain = [A0SimpleKeychain keychain];
     } else {
-      NSString *accessGroup = [NSString stringWithFormat: @"%@%@%@", [self getBundleSeedID], @".", keychainGroup];
+      
       keychain = [A0SimpleKeychain keychainWithService: keychainGroup accessGroup: accessGroup];
     }
 
     keychain.useAccessControl = YES;
     keychain.defaultAccessiblity = A0SimpleKeychainItemAccessibleWhenPasscodeSetThisDeviceOnly;
 
-    NSString *value = [keychain stringForKey:key promptMessage:message];
+    NSString *value = [keychain stringForKey:key];
 
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:value];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
@@ -76,21 +71,16 @@
 
     NSString* key = [arguments objectAtIndex:0];
     NSString* value = [arguments objectAtIndex:1];
-    BOOL useTouchID = [[arguments objectAtIndex:2] boolValue];
-    NSString *keychainGroup = [arguments objectAtIndex:3];
+    NSString* keychainGroup = [arguments objectAtIndex:2];
+    NSString *accessGroup =[arguments objectAtIndex:3];
    
     A0SimpleKeychain *keychain = nil;
     
     if (keychainGroup == [NSNull null]) {
       keychain = [A0SimpleKeychain keychain];
     } else {
-      NSString *accessGroup = [NSString stringWithFormat: @"%@%@%@", [self getBundleSeedID], @".", keychainGroup];
+      
       keychain = [A0SimpleKeychain keychainWithService: keychainGroup accessGroup: accessGroup];
-    }
-
-    if(useTouchID) {
-      keychain.useAccessControl = YES;
-      keychain.defaultAccessiblity = A0SimpleKeychainItemAccessibleWhenPasscodeSetThisDeviceOnly;
     }
 
     [keychain setString:value forKey:key];
@@ -114,13 +104,13 @@
 
     NSString *key = [arguments objectAtIndex:0];
     NSString *keychainGroup = [arguments objectAtIndex:1];
+    NSString *accessGroup = [arguments objectAtIndex:2];
    
     A0SimpleKeychain *keychain = nil;
     
     if (keychainGroup == [NSNull null]) {
       keychain = [A0SimpleKeychain keychain];
     } else {
-      NSString *accessGroup = [NSString stringWithFormat: @"%@%@%@", [self getBundleSeedID], @".", keychainGroup];
       keychain = [A0SimpleKeychain keychainWithService: keychainGroup accessGroup: accessGroup];
     }
 
@@ -129,26 +119,6 @@
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
   }];
-}
-
-- (NSString *) getBundleSeedID {
-  NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:
-                         (__bridge NSString *)kSecClassGenericPassword, (__bridge NSString *)kSecClass,
-                         @"bundleSeedID", kSecAttrAccount,
-                         @"", kSecAttrService,
-                         (id)kCFBooleanTrue, kSecReturnAttributes,
-                         nil];
-  CFDictionaryRef result = nil;
-  OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
-  if (status == errSecItemNotFound)
-      status = SecItemAdd((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
-  if (status != errSecSuccess)
-      return nil;
-  NSString *accessGroup = [(__bridge NSDictionary *)result objectForKey:(__bridge NSString *)kSecAttrAccessGroup];
-  NSArray *components = [accessGroup componentsSeparatedByString:@"."];
-  NSString *bundleSeedID = [[components objectEnumerator] nextObject];
-  CFRelease(result);
-  return bundleSeedID;
 }
 
 @end
