@@ -1,6 +1,8 @@
 /*
 PRE-REQUISITE: Install the Keychain plugin using the Cordova cli or plugman
 */
+const APP_GROUP = 'com.myapp.group';
+const ACCESS_GROUP = 'accesscode.com.myapp.group';
 
 function onBodyLoad() {
     document.addEventListener("deviceready", onDeviceReady, false);
@@ -19,7 +21,6 @@ function onDeviceReady() {
 
 function onGet() {
     var key = document.getElementById("keytoget").value;
-    var touchIdMessage = 'TouchID Message'
 
     var win = function(value) {
             alert("GET SUCCESS - Key: " + key + " Value: " + value);
@@ -28,14 +29,12 @@ function onGet() {
             alert("GET FAIL - Key: " + key + " Error: " + error);
         };
 
-    Keychain.get(win, fail, key, touchIdMessage);
+    Keychain.get(win, fail, key, APP_GROUP, ACCESS_GROUP);
 }
 
 function onSet() {
     var key = document.getElementById("keytoset").value;
     var value = document.getElementById("valuetoset").value;
-
-    var useTouchID = false;
 
     var win = function() {
             alert("SET SUCCESS - Key: " + key);
@@ -44,7 +43,7 @@ function onSet() {
             alert("SET FAIL - Key: " + key + " Error: " + error);
         };
 
-    Keychain.set(win, fail, key, value, useTouchID);
+    Keychain.set(win, fail, key, value, APP_GROUP, ACCESS_GROUP);
 }
 
 function onRemove() {
@@ -57,5 +56,5 @@ function onRemove() {
             alert("REMOVE FAIL - Key: " + key + " Error: " + error);
         };
 
-    Keychain.remove(win, fail, key);
+    Keychain.remove(win, fail, key, APP_GROUP, ACCESS_GROUP);
 }
