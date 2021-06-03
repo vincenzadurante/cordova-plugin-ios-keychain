@@ -25,19 +25,21 @@ var exec = require('cordova/exec');
 var Keychain = {
 	serviceName: "Keychain",
 
-	get: function(success, error, key, touchIDMessage, keychainGroup) {
-		touchIDMessage = !touchIDMessage ? null : touchIDMessage;
+	get: function(success, error, key, keychainGroup, keychainAccessGroup) {
 		keychainGroup = !keychainGroup ? null : keychainGroup;
-		exec(success, error, this.serviceName, "get", [key, touchIDMessage, keychainGroup]);
+		keychainAccessGroup = !keychainAccessGroup ? null : keychainAccessGroup;
+		exec(success, error, this.serviceName, "get", [key, keychainGroup, keychainAccessGroup]);
 	},
 
-	set: function(success, error, key, value, useTouchID, keychainGroup) {
+	set: function(success, error, key, value, keychainGroup, keychainAccessGroup) {
 		keychainGroup = !keychainGroup ? null : keychainGroup;
-		exec(success, error, this.serviceName, "set", [key, value, !!useTouchID, keychainGroup]);
+		keychainAccessGroup = !keychainAccessGroup ? null : keychainAccessGroup;
+		exec(success, error, this.serviceName, "set", [key, value, keychainGroup, keychainAccessGroup]);
 	},
 
-	setJson: function(success, error, key, obj, useTouchID, keychainGroup) {
+	setJson: function(success, error, key, obj, keychainGroup, keychainAccessGroup) {
 		keychainGroup = !keychainGroup ? null : keychainGroup;
+		keychainAccessGroup = !keychainAccessGroup ? null : keychainAccessGroup;
 		var value = JSON.stringify(obj);
 		value = value
 			.replace(/[\\]/g, '\\\\')
@@ -49,11 +51,12 @@ var Keychain = {
 			.replace(/[\r]/g, '\\r')
 			.replace(/[\t]/g, '\\t');
 
-		exec(success, error, this.serviceName, "set", [key, value, !!useTouchID, keychainGroup]);
+		exec(success, error, this.serviceName, "set", [key, value, keychainGroup, keychainAccessGroup]);
 	},
 
-	getJson: function(success, error, key, touchIDMessage, keychainGroup) {
+	getJson: function(success, error, key, keychainGroup, keychainAccessGroup) {
 		keychainGroup = !keychainGroup ? null : keychainGroup;
+		keychainAccessGroup = !keychainAccessGroup ? null : keychainAccessGroup;
 		var cb = function(v) {
 			if(!v) {
 				success(null);
@@ -68,12 +71,13 @@ var Keychain = {
 				error(e);
 			}
 		};
-		exec(cb, error, this.serviceName, "get", [key, touchIDMessage, keychainGroup]);
+		exec(cb, error, this.serviceName, "get", [key, keychainGroup, keychainAccessGroup]);
 	},
 
-	remove: function(successCallback, failureCallback, key, keychainGroup) {
+	remove: function(successCallback, failureCallback, key, keychainGroup, keychainAccessGroup) {
 		keychainGroup = !keychainGroup ? null : keychainGroup;
-		exec(successCallback, failureCallback, this.serviceName, "remove", [key, keychainGroup]);
+		keychainAccessGroup = !keychainAccessGroup ? null : keychainAccessGroup;
+		exec(successCallback, failureCallback, this.serviceName, "remove", [key, keychainGroup, keychainAccessGroup]);
 	}
 };
 
